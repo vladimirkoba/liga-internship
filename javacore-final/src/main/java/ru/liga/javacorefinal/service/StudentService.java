@@ -14,12 +14,13 @@ public class StudentService {
      */
     public List<Student> transferStudentsToNextCourse(List<Student> students) {
         List<Student> resultList = new ArrayList<>();
+
         for (Student student : students) {
             if (student.getAllExamsPassed()) {
                 if (student.getCourse().equals(5)) {
-                    student.setFinished(true);
+//                    student.setFinished(true);
                 } else {
-                    student.setCourse(student.getCourse() + 1);
+//                    student.setCourse(student.getCourse() + 1);
                 }
                 resultList.add(student);
             }

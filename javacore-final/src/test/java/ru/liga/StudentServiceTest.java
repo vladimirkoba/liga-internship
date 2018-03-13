@@ -26,6 +26,7 @@ public class StudentServiceTest {
         );
         List<Student> result = new StudentService().transferStudentsToNextCourse(students);
         assertThat(result).hasSize(2);
+
         assertThat(result).containsExactly(
                 new Student(2, "Афанасьев Александр Григорьевич", LocalDate.of(1998, Month.APRIL, 12), true, false),
                 new Student(5, "Булатов Алексей Андреевич", LocalDate.of(1995, Month.MAY, 2), true, true)
