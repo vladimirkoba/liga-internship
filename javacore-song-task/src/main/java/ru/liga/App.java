@@ -66,8 +66,7 @@ public class App {
         Map<Long,Integer> result = new HashMap<>();
 
         midiFile.vocalNoteList().forEach(note -> {
-            Long duration = note.durationTicks();
-
+            Long duration = (60*1000)/note.durationTicks();
             if (result.containsKey(duration))
                 result.compute(duration, (aLong, integer) -> ++integer);
             else result.put(duration,0);
@@ -81,8 +80,9 @@ public class App {
     /** analize by height */
     private static void analizeByHeight(SimpleMidiFile midiFile){
         Map<String,Integer> result = new HashMap<>();
+
         midiFile.vocalNoteList().forEach(note -> {
-            String noteName = note.sign().getNoteName();
+            String noteName = note.sign().getNoteName() + note.sign().getOctave();
 
             if (result.containsKey(noteName))
                 result.compute(noteName,(key,val)-> ++val);
