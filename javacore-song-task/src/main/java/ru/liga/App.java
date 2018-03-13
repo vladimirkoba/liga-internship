@@ -1,7 +1,13 @@
 package ru.liga;
 
-import ru.liga.songtask.content.Content;
-import ru.liga.songtask.domain.SimpleMidiFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import static ru.liga.songtask.content.Content.ZOMBIE;
 
 /**
  * Всего нот: 15
@@ -28,9 +34,16 @@ import ru.liga.songtask.domain.SimpleMidiFile;
  * 11: 2
  */
 public class App {
+    private static final Logger logger = LoggerFactory.getLogger(App.class);
+
     public static void main(String[] args) {
-        SimpleMidiFile simpleMidiFile = new SimpleMidiFile(Content.ZOMBIE);
-        System.out.println("Количество нот: " + simpleMidiFile.vocalNoteList().size());
-        System.out.println("Длительность (сек): " + simpleMidiFile.durationMs() / 1000);
+        List<String> simpleMidiFiles = new ArrayList<>();
+        int i = 0;
+        URL resource = String.class.getClass().getClassLoader().getResource("cranberries-zombie.mid");
+
+
+//        logger.info("Количество нот: " + simpleMidiFile.vocalNoteList().size());
+//        logger.info("Длительность (сек): " + simpleMidiFile.durationMs() / 1000);
+
     }
 }

@@ -37,6 +37,7 @@ public class SimpleMidiFile {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
     }
 
     public List<Note> vocalNoteList() {
@@ -78,61 +79,9 @@ public class SimpleMidiFile {
         return null;
     }
 
-    public Note getNoteByEvent(NoteOn noteOn, int channelNumber) {
-        List<Note> vbNotes = noteList(channelNumber);
-        return (vbNotes).stream()
-                .filter(value -> value.equalsToNoteOn(noteOn))
-                .findAny()
-                .orElse(null);
-    }
-
-
-    public MidiFile getMidiFormat() {
-        return midiFile;
-    }
 
 
 
-
-
-    private List<Integer> createTransponationScheme(Integer toHighNoteCount, Integer toLowNoteCount) {
-        List<Integer> transponationScheme = new ArrayList<>();
-        for (int i = 1; i <= toHighNoteCount; i++) {
-            transponationScheme.add(i);
-        }
-
-        for (int i = 1; i <= (toHighNoteCount + toLowNoteCount); i++) {
-            transponationScheme.add(toHighNoteCount - i);
-        }
-
-        return transponationScheme;
-    }
-
-    private boolean hasNotes(TreeSet<MidiEvent> events) {
-        return (events).stream()
-                .anyMatch(value -> value instanceof NoteOn);
-    }
-
-    private void generateOtherSamples(MidiTrack midiTrack, long lengthInTicks, List<Integer> transponationScheme) {
-        TreeSet<MidiEvent> sampleEvents = copySampleEvents(midiTrack.getEvents());
-        generateSamplesByTransponationScheme(midiTrack, lengthInTicks, sampleEvents, transponationScheme);
-    }
-
-
-    private TreeSet<MidiEvent> copySampleEvents(TreeSet<MidiEvent> events) {
-        TreeSet<MidiEvent> midiEvents = new TreeSet<>();
-        midiEvents.addAll(events);
-        return midiEvents;
-    }
-
-    private void generateSamplesByTransponationScheme(MidiTrack midiTrack, long lengthInTicks, TreeSet<MidiEvent> sampleEvents, List<Integer> transponationScheme) {
-        Long currentTick = 0L;
-        for (int i = 0; i < transponationScheme.size(); i++) {
-            Integer transponationDiff = transponationScheme.get(i);
-            currentTick = lengthInTicks * (i + 1);
-            addSample(midiTrack, currentTick, sampleEvents, transponationDiff);
-        }
-    }
 
     private void addSample(MidiTrack midiTrack, Long currentTick, TreeSet<MidiEvent> sampleEvents, int t) {
         for (MidiEvent sampleEvent : sampleEvents) {
